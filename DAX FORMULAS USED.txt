@@ -1,0 +1,40 @@
+DAX FORMULAS USED:
+
+1. Average_Age_Survival = 
+calculate(
+    AVERAGE(heart_Disease_clinical_records_[age]),
+    'heart_Disease_clinical_records_'[DEATH_EVENT]=0
+) 
+
+2. Survival_Rate = 
+1-Divide(
+    sum(heart_Disease_clinical_records_[DEATH_EVENT]),
+    count(heart_Disease_clinical_records_[count])
+)  
+
+3. Total_Death = 
+calculate(
+    count(heart_Disease_clinical_records_[count]),
+    'heart_Disease_clinical_records_'[DEATH_EVENT]=1
+)
+
+4. Total_survivors = 
+CALCULATE(
+    count(heart_Disease_clinical_records_[count]),
+    'heart_Disease_clinical_records_'[DEATH_EVENT]=0
+)   
+
+
+Calculated Columns:
+
+Age_Group = 
+SWITCH(
+    TRUE(),
+    'heart_Disease_clinical_records_'[age]>=40 && 'heart_Disease_clinical_records_'[age]<=50, "40-50",
+    'heart_Disease_clinical_records_'[age]>=51 && 'heart_Disease_clinical_records_'[age] <=60, "51-60",
+     'heart_Disease_clinical_records_'[age]>= 61 && 'heart_Disease_clinical_records_'[age]<=70, "61-70",
+     'heart_Disease_clinical_records_'[age]>= 70, "71+",
+     "Below 40"
+)     
+
+2. Gender = IF(heart_Disease_clinical_records_[sex]=0, "Female", "Male")
